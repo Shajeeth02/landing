@@ -45,7 +45,7 @@ CSS / Tailwind CSS – Styling
 🚀 Getting Started
 1. Clone the Repository
 bash
-git clone https://github.com/your-username/car-portfolio.git
+git clone https://github.com/your-username/landing.git
 cd car-portfolio
 
 2. Install Dependencies
