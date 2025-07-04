@@ -1,0 +1,318 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Lamborghini</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script type="text/javascript" src="assets/js/three.min.js"></script>
+		<script type="text/javascript" src="assets/js/RectAreaLightUniformsLib.js"></script>
+		<script type="text/javascript" src="assets/js/OrbitControls.js"></script>
+		<script type="text/javascript" src="assets/js/GLTFLoader.js"></script>
+		<script type="text/javascript" src="assets/js/tween.min.js"></script>
+		<script type="text/javascript" src="assets/js/stats.min.js"></script>
+		<script type="text/javascript" src="assets/js/Configurator.js"></script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<div class="logo">
+					<img src="images/lamborghini-logo.png" alt="Logo">
+				</div>
+				<h1>Lamborghini</h1>
+				<nav>
+					<ul>
+						<li><a href="">Home</a></li>
+						<li><a href="">About Us</a></li>
+						<li><a href="">Cars</a></li>
+						<li><a href="">Customize</a></li>
+						<li><a href="">Contact dealers</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Intro -->
+		<section id="intro" class="main style1 dark fullscreen">
+			<video autoplay muted loop playsinline class="background-video">
+				<source src="assets/videos/background.mp4" type="video/mp4">
+				<source src="assets/videos/background.mp4" type="video/webm">
+				
+			</video>
+			<div class="content">
+				<header>
+					<h2>Lamborghini Aventador</h2>
+				</header>
+				<p>Know more <br /></p>
+				<footer>
+					<a href="#one" class="button style2 down">More</a>
+				</footer>
+			</div>
+		</section>
+
+		<!-- One -->
+			<section id="one" class="main style2 right dark fullscreen">
+				<img src="images\lamborghini1.jpg" width="980" height="556" alt="Koenigsegg CC8S" />
+				<div class="content box style2">
+					<header>
+						
+						<h2>About</h2>
+					</header>
+					<p>Lamborghini is an Italian luxury sports car brand known for its high-performance, stylish, and powerful supercars. Founded in 1963 by Ferruccio Lamborghini, the company aimed to compete with Ferrari. Iconic models like the Aventador, Huracán, and Revuelto showcase cutting-edge design, roaring V10 and V12 engines, and extreme speed. Lamborghini is famous for its aggressive styling, scissor doors, and groundbreaking innovations. Owned by Volkswagen Group under Audi, the brand continues to dominate the supercar world with electrified and hybrid models, blending performance with future-ready technology.</p>
+					<span class="tooltip">
+						<a class="text-blue-600 hover:underline" href="picture.html" data-url="picture.html">Picture &amp; Text</a>
+						<div class="tooltiptext"></div>
+					</span>
+				</div>
+				<a href="#two" class="button style2 down anchored">Next</a>
+				
+			</section>
+
+		<!-- Two -->
+			<section id="two" class="main style2 left dark fullscreen">
+				<img src="images\lamborghini2.jpg" width="980" height="456" alt="Koenigsegg CC8S" />
+				<div class="content box style2">
+					<header>
+						<h2>Lamborghini aventador</h2>
+					</header>
+					<p>Revolutionary thinking is at the heart of every idea from Automobili Lamborghini. Whether it is aerospace-inspired design or technologies applied to the naturally aspirated V12 engine or carbon-fiber structure, going beyond accepted limits is part of our philosophy. The Aventador advances every concept of performance, immediately establishing itself as the benchmark for the super sports car sector. Giving a glimpse of the future today, it comes from a family of supercars already considered legendary.</p>
+					<span class="tooltip">
+						<a class="text-blue-600 hover:underline" href="video.html" data-url="video.html">Video &amp; Text</a>
+						<div class="tooltiptext">Loading...</div>
+					</span>,
+					<span class="tooltip">
+						<a class="text-blue-600 hover:underline" href="gif.html" data-url="gif.html">GIF &amp; Text</a>
+						<div class="tooltiptext">Loading...</div>
+					</span>
+				</div>
+				<a href="#work" class="button style2 down anchored">Next</a>
+			</section>
+			
+			
+			<!-- 3D Model Section -->
+			
+			<section id="model" class="main">
+				<div id="3d-container" style="width: 100%; height: 100vh;"></div>
+			</section>
+			
+			<script>
+				let scene, camera, renderer, controls, loader;
+				
+				function init() {
+					// Scene
+					scene = new THREE.Scene();
+					scene.background = new THREE.Color(0x000000);
+		
+					// Camera
+					camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+					camera.position.set(0, 2, 5);
+		
+					// Renderer
+					renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+					renderer.setSize(window.innerWidth, window.innerHeight);
+					document.getElementById('3d-container').appendChild(renderer.domElement);
+		
+					// Controls
+					controls = new THREE.OrbitControls(camera, renderer.domElement);
+					controls.enableDamping = true;
+					controls.dampingFactor = 0.05;
+					controls.rotateSpeed = 0.5;
+					controls.minAzimuthAngle = -Math.PI / 2;
+					controls.maxAzimuthAngle = Math.PI / 2;
+					controls.minPolarAngle = Math.PI / 6; // Limit upward rotation
+            		controls.maxPolarAngle = Math.PI / 2;
+					
+					// Lights
+					let ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+					scene.add(ambientLight);
+		
+					let directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+					directionalLight.position.set(5, 5, 5);
+					scene.add(directionalLight);
+
+					// Load Road Texture
+					let textureLoader = new THREE.TextureLoader();
+					let roadTexture = textureLoader.load('data/env/asphalt_albedo.png');
+					roadTexture.wrapS = roadTexture.wrapT = THREE.RepeatWrapping;
+					roadTexture.repeat.set(1000, 1000);
+		
+					let roadMaterial = new THREE.MeshStandardMaterial({ map: roadTexture });
+					let roadGeometry = new THREE.PlaneGeometry(200, 200);
+					let road = new THREE.Mesh(roadGeometry, roadMaterial);
+					road.rotation.x = -Math.PI / 2;
+					scene.add(road);
+		
+					// Load Model
+					loader = new THREE.GLTFLoader();
+					loader.load('assets/models/aventador.gltf', function(gltf) {
+						let model = gltf.scene;
+						model.position.set(0, 0, 0);
+						model.scale.set(1, 1, 1);
+						scene.add(model);
+						console.log('Model loaded successfully');
+					}, function(xhr) {
+						console.log((xhr.loaded / xhr.total * 100) + '% loaded');
+					}, function(error) {
+						console.error('An error occurred while loading the model:', error);
+					});
+		
+					window.addEventListener('resize', onWindowResize, false);
+					animate();
+				}
+		
+				function onWindowResize() {
+					camera.aspect = window.innerWidth / window.innerHeight;
+					camera.updateProjectionMatrix();
+					renderer.setSize(window.innerWidth, window.innerHeight);
+				}
+		
+				function animate() {
+					requestAnimationFrame(animate);
+					controls.update();
+					renderer.render(scene, camera);
+				}
+		
+				init();
+			</script>
+			
+			
+		<!-- Specification -->
+			<section id="work" class="main style3 primary">
+				<div class="content">
+					<header>
+						<h2>Specifications</h2>
+						<p>The Aventador LP 700–4 used Lamborghini's 700 PS (515 kW; 690 hp) 6,498 cc (6.5 L; 396.5 cu in) 60° V12 engine, weighing about 235 kg (518 lb). Known internally as the L539,it was Lamborghini's fifth in-house engine and only second V12 design since the 3.5-litre power plant found in the 350GT.</p>
+						<span class="tooltip">
+							<a class="text-blue-600 hover:underline" href="pdf.html" data-url="pdf.html">PDF &amp; Text</a>
+							<div class="tooltiptext">Loading...</div>
+						</span>
+					</header>
+					
+
+					<!-- Gallery  -->
+						<div class="gallery">
+							<article class="from-left">
+								<a href="images/fulls/01.jpg" class="image fit"><img src="images/fulls/01.jpg" title="Art1" alt="" /></a>
+							</article>
+							<article class="from-right">
+								<a href="images/fulls/02.jpg" class="image fit"><img src="images/fulls/02.jpg" title="Art2" alt="" /></a>
+							</article>
+							<article class="from-left">
+								<a href="images/fulls/03.jpg" class="image fit"><img src="images/fulls/03.jpg" title="Art3" alt="" /></a>
+							</article>
+							<article class="from-right">
+								<a href="images/fulls/04.jpg" class="image fit"><img src="images/fulls/04.jpg" title="Art4" alt="" /></a>
+							</article>
+							<article class="from-left">
+								<a href="images/fulls/05.jpg" class="image fit"><img src="images/fulls/05.jpg" title="Art5" alt="" /></a>
+							</article>
+							<article class="from-right">
+								<a href="images/fulls/06.jpg" class="image fit"><img src="images/fulls/06.jpg" title="Art6" alt="" /></a>
+							</article>
+						</div>
+
+				</div>
+			</section>
+
+		<!-- Contact -->
+			<section id="contact" class="main style3 secondary">
+				<div class="content">
+					<header>
+						<h2>Contact Dealership </h2>
+						<p>Contact the dealership , find your nearby Lamborghini dealers.</p>
+					</header>
+					<div class="box">
+						<form method="post" action="#">
+							<div class="fields">
+								<div class="field half"><input type="text" name="name" placeholder="Name" /></div>
+								<div class="field half"><input type="email" name="email" placeholder="Email" /></div>
+								<div class="field"><textarea name="message" placeholder="Message" rows="6"></textarea></div>
+							</div>
+							<ul class="actions special">
+								<li><input type="submit" value="Send Message" /></li>
+							</ul>
+						</form>
+					</div>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<footer id="footer">
+
+				<!-- Icons -->
+					<ul class="icons">
+						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+						<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+						<li><a href="#" class="icon brands fa-dribbble"><span class="label">Dribbble</span></a></li>
+						<li><a href="#" class="icon brands fa-pinterest"><span class="label">Pinterest</span></a></li>
+					</ul>
+
+				<!-- Menu -->
+					<ul class="menu">
+						<li>&copy; Shajeeth</li><li>Design: <a href="">Shajeeth </a></li>
+					</ul>
+
+			</footer>
+			<script>
+				document.addEventListener("DOMContentLoaded", () => {
+					const tooltips = document.querySelectorAll(".tooltip a");
+				
+					tooltips.forEach(link => {
+						link.addEventListener("mouseenter", async function () {
+							const tooltip = this.closest(".tooltip").querySelector(".tooltiptext"); // Ensure correct selection
+							const url = this.getAttribute("data-url");
+				
+							if (!tooltip.dataset.loaded) { // Prevent multiple fetch calls
+								tooltip.innerHTML = "<p>Loading preview...</p>";
+								tooltip.style.visibility = "visible";
+								tooltip.style.opacity = "1";
+				
+								try {
+									const response = await fetch(url);
+									if (!response.ok) throw new Error("Network error");
+				
+									const html = await response.text();
+									const parser = new DOMParser();
+									const doc = parser.parseFromString(html, "text/html");
+				
+									// Extract first paragraph and first media (if available)
+									const firstParagraph = doc.querySelector("p") ? doc.querySelector("p").innerText : "No preview available.";
+									const firstMedia = doc.querySelector("img, iframe, embed") ? doc.querySelector("img, iframe, embed").outerHTML : "";
+				
+									tooltip.innerHTML = `<p>${firstParagraph}</p>${firstMedia}`;
+									tooltip.dataset.loaded = "true"; // Mark as loaded
+								} catch (error) {
+									tooltip.innerHTML = "<p>Error loading preview.</p>";
+								}
+							} else {
+								tooltip.style.visibility = "visible";
+								tooltip.style.opacity = "1";
+							}
+						});
+				
+						link.addEventListener("mouseleave", function () {
+							const tooltip = this.closest(".tooltip").querySelector(".tooltiptext");
+							tooltip.style.visibility = "hidden";
+							tooltip.style.opacity = "0";
+						});
+					});
+				});
+				
+			</script>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.poptrox.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
